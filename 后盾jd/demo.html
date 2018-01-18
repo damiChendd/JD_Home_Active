@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul,li{
+            list-style: none;
+        }
+        .box{
+            width: 490px;
+            height:170px;
+            padding: 5px;
+            border: 1px solid #ccc;
+            margin: 200px auto;
+        }
+        .inner{
+            width: 490px;
+            height:170px;
+            overflow: hidden;
+            position: relative;
+        }
+        ul{
+            list-style: none;
+            width: 500%;
+            position: relative;
+            left: 0;
+        }
+        li{
+            float: left;
+            /*position: absolute;*/
+        }
+        .square{
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+        }
+        .square span{
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            background-color: #fff;
+            text-align: center;
+            border: 1px solid #ccc;
+            z-index: 10;
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+<body>
+<div class="box">
+    <div  class="inner">
+        <ul>
+            <li><img src="Images/slide_b_1.jpg" alt=""></li>
+            <li><img src="Images/slide_b_1_2.jpg" alt=""></li>
+            <li><img src="Images/slide_b_1_3.jpg" alt=""></li>
+            <li><img src="Images/slide_b_4_1.jpg" alt=""></li>
+            <!--<li><img src="Images/05.jpg" alt=""></li>-->
+        </ul>
+        <div class="square">
+            <span>1</span>
+            <span>2</span>
+            <span>3</span>
+            <span>4</span>
+            <span>5</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    //鼠标放到小方块上面，ul向左移动几个li
+    //span绑定事件，移动ul，点亮指定的盒子
+    var ul = document.getElementsByTagName("ul")[0];
+    var liarr = ul.children;
+    var spanarr = document.getElementsByTagName("span");
+    var  timer = null;
+    for(var i=0;i<spanarr.length;i++)
+    {
+        spanarr[i].index =i;
+        spanarr[i].onmouseover = function () {
+            for(var j=0;j<spanarr.length;j++)
+            {
+                spanarr[j].style.backgroundColor="white";
+            }
+            this.style.backgroundColor="orange";
+            move(ul,-490*this.index);
+        }
+    }
+    function move(name,target) {
+        clearInterval(name.timer);
+        name.timer = setInterval(function () {
+            if(name.offsetLeft<target)
+            {
+                name.style.left = name.offsetLeft+10+"px";
+            }
+            else
+            {
+                name.style.left = name.offsetLeft-10+"px";
+            }
+            if(Math.abs(target-name.offsetLeft)<10)
+            {
+                name.style.left = target+"px";
+                clearInterval(name.timer);
+            }
+
+        },30);
+    }
+
+</script>
+</body>
+</html>
